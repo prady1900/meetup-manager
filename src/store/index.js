@@ -14,13 +14,15 @@ export const store = new Vuex.Store({
       { imgUrl: "https://picsum.photos/300", title: "Random Image 6", id: '5', date: '2020-06-12' }
     ],
     user: {
-      id: 'abcder',
+      id: 'dsfsdf',
       registeredMeetUps: ['0'],
     }
   },
   getters: {
-    load_MeetUps(state) {
-      return state.loadMeetUps
+    loadMeetUps(state) {
+      return state.loadMeetUps.sort((meetupA, meetupB)=>{
+        return meetupA.date > meetupB.date
+      })
     },
     featuredMeetups(state) {
       return state.loadMeetUps.slice(0, 3)
@@ -28,14 +30,14 @@ export const store = new Vuex.Store({
     loadMeetUp(state) {
       return (meetUpId) => {
         return state.loadMeetUps.find((meetup) => {
-          return meetup.id == meetUpId
+          return meetup.id === meetUpId
         })
       }
     }
   },
   mutations: {
     createMeetUps(state, payload) {
-      state.loadMeetUp.push(payload)
+      state.loadMeetUps.push(payload)
     }
   },
   actions: {
@@ -43,13 +45,12 @@ export const store = new Vuex.Store({
       const meetUps = {
         title: payload.title,
         location: payload.loc,
-        imgUrl: payload.img_Url,
-        description: payload.desc,
-        date: new Date(),
-        id: 'adsdvasdv'
+        imgUrl: payload.imgurl,
+        date: payload.date,
+        id: 'dsfsdfsdf'
       }
       //Reach Out Firebase
-      commit('created MeetUps', meetUps)
+      commit('createMeetUps', meetUps)
     }
   },
 

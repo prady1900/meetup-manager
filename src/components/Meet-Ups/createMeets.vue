@@ -25,7 +25,7 @@
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <v-text-field
-            v-model="img_url"
+            v-model="imgurl"
             label="Image Url"
             :rules="imgRules"
             outlined
@@ -33,7 +33,7 @@
           ></v-text-field>
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
-          <img :src="img_url"/>
+          <img :src="imgurl"/>
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <v-textarea
@@ -45,7 +45,7 @@
           ></v-textarea>
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
-          <v-btn color="success" :disabled="!valid" v-on:click="validattion()">
+          <v-btn color="success" :disabled="!valid" v-on:click="validation()">
             Create MeetUp
           </v-btn>
         </v-col>
@@ -62,14 +62,14 @@ export default {
       location: '',
       locRules: [(v) => !!v || "Location is required"],
 
-      img_url: '',
+      imgurl: '',
       imgRules: [(v) => !!v || "Image Url is required"],
 
       desc: '',
       descRules: [(v) => !!v || "Description is required"],
   }),
   methods: {
-    validattion() {
+    validation() {
       console.log("validated")
       console.log(this.$refs.form)
       this.$refs.form.validate()
@@ -77,9 +77,9 @@ export default {
         const meetUpData ={
           title: this.title,
           location: this.loc,
-          img_url: this.img_url,
+          imgurl: this.imgurl,
           desc: this.desc,
-          date: '2018-05-12'
+          date: '2022-06-11'
         }
         this.$store.dispatch('createMeetUps', meetUpData)
       }

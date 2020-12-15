@@ -38,7 +38,6 @@
         </v-lazy>
       </v-col>
     </v-row>
-    >
   </v-container>
 </template>
 
@@ -46,7 +45,7 @@
 export default {
   computed: {
     loadMeetUps() {
-      return this.$store.state.loadMeetUps
+      return this.$store.getters.loadMeetUps
     },
   },
 };

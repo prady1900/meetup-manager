@@ -2,7 +2,7 @@
   <div id="meetUpsPage">
     <v-container>
       <v-row>
-        <v-card-title>My 1st MeetUp</v-card-title>
+        <v-card-title>{{meetup.title}}</v-card-title>
         <v-card class="mx-auto" max-width="">
           <v-img
             class="white--text align-end"
