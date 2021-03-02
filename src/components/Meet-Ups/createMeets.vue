@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation class="mx-6">
+  <v-form ref="form" v-model="valid" lazy-validation class="mx-6" @submit.prevent='onCreateMeetup'>
       <v-row >
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <h2 class="grey--text mb-2">Create Your MeetUps</h2>
@@ -7,8 +7,9 @@
         <v-col xs="12" md="6" offset-md="3">
           <v-text-field
             v-model="title"
+            name="title"
+            id="title"
             label="Title"
-            ref="name"
             :rules="titleRules"
             outlined
             dense
@@ -16,6 +17,8 @@
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <v-text-field
+            name="location"
+            id="location"
             v-model="location"
             label="Location"
             :rules="locRules"
@@ -25,7 +28,9 @@
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <v-text-field
-            v-model="imgurl"
+            name="imageUrl"
+            id="imageUrl"
+            v-model="imageUrl"
             label="Image Url"
             :rules="imgRules"
             outlined
@@ -33,27 +38,51 @@
           ></v-text-field>
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
-          <img :src="imgurl"/>
+          <v-img
+              height="200px"
+              :src="imageUrl"
+            ></v-img>
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <v-textarea
             counter
-            v-model="desc"
+            v-model="description"
+            name="description"
+            id="description"
             label="Description"
             :rules="descRules"
             outlined
           ></v-textarea>
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
-          <v-btn color="success" :disabled="!valid" v-on:click="validation()">
+          <v-date-picker
+            v-model="date"
+            class="mb-4"
+            min="2020-12-01"
+            max="2030-12-31">
+          </v-date-picker>
+          <p>{{date}}</p>   
+        </v-col>
+        <v-col xs="12" sm="12" md="6" offset-md="3">
+            <v-time-picker
+              v-model="time"
+              format="24hr">
+            </v-time-picker>
+            <p>{{ time }}</p>
+        </v-col>
+        <v-col xs="12" sm="12" md="6" offset-md="3">
+          <v-btn color="success" :disabled="!formisValid" type="submit">
             Create MeetUp
           </v-btn>
+          {{ submittableDateTime }}
         </v-col>
       </v-row>
   </v-form>
 </template>
 <script>
+import moment from 'moment'
 export default {
+  
   data: ()=> ({
       valid:true,
       title: '',
@@ -62,30 +91,52 @@ export default {
       location: '',
       locRules: [(v) => !!v || "Location is required"],
 
-      imgurl: '',
+      imageUrl: '',
       imgRules: [(v) => !!v || "Image Url is required"],
 
-      desc: '',
+      description: '',
       descRules: [(v) => !!v || "Description is required"],
+      date: new moment().format(),
+      time: new Date()
   }),
+  
   methods: {
-    validation() {
-      console.log("validated")
-      console.log(this.$refs.form)
-      this.$refs.form.validate()
-      
+    onCreateMeetup() {
         const meetUpData ={
           title: this.title,
-          location: this.loc,
-          imgurl: this.imgurl,
-          desc: this.desc,
-          date: '2022-06-11'
+          location: this.location,
+          imageUrl: this.imageUrl,
+          date: this.submittableDateTime
         }
-        this.$store.dispatch('createMeetUps', meetUpData)
+
+        console.log(meetUpData)
+        this.$store.dispatch('createMeetUp', meetUpData)
+        
       }
       
     },
-  computed: {},
+  computed: {
+    formisValid() {
+      return this.title !== '' && 
+      this.location !== '' &&
+      this.description !== '' &&
+      this.imageurl !== ''
+    },
+    submittableDateTime () {
+        const date = new Date(this.date)
+        if (typeof this.time === 'string') {
+          let hours = this.time.match(/^(\d+)/)[1]
+          const minutes = this.time.match(/:(\d+)/)[1]
+          date.setHours(hours)
+          date.setMinutes(minutes)
+        } else {
+          date.setHours(this.time.getHours())
+          date.setMinutes(this.time.getMinutes())
+        }
+        console.log(date)
+        return date
+      }
+  },
 };
 </script>
 

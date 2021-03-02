@@ -7,7 +7,7 @@
           <v-img
             class="white--text align-end"
             height="400px"
-            :src="meetup.imgUrl"
+            :src="meetup.imageUrl"
           >
           </v-img>
           <v-card-text class="text--primary">
@@ -36,7 +36,7 @@ export default {
   props:['id'],
   computed:{
     meetup(){
-      return this.$store.getters.loadMeetUp(this.id)
+      return this.$store.getters.loadedMeetUp(this.id)
     }
   }
 };
