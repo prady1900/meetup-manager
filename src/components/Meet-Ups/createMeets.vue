@@ -54,23 +54,16 @@
             outlined
           ></v-textarea>
         </v-col>
-        <v-row>
-          <v-date-picker v-model="time"></v-date-picker>
-        </v-row>
         <v-col xs="12" sm="12" md="6" offset-md="3">
-          <v-date-picker
-            v-model="date"
-            class="mb-4"
-            min="2020-12-01"
-            max="2030-12-31">
-          </v-date-picker>
+          <v-date-picker v-model="date"></v-date-picker>
         </v-col>
-        <v-col xs="12" sm="12" md="6" offset-md="3">
+        
+        <v-col xs="12" sm="12" md="6" offset-md="3" >
             <v-time-picker
-              v-model="time"
-              format="24hr">
+              v-model="time">
             </v-time-picker>
         </v-col>
+        
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <v-btn color="success" :disabled="!formisValid" type="submit">
             Create MeetUp
@@ -96,8 +89,10 @@ export default {
 
       description: '',
       descRules: [(v) => !!v || "Description is required"],
-      date: new Date(),
-      time: new Date()
+      date: new Date().toISOString().substr(0, 10),
+      time: new Date(),
+
+      
   }),
   
   methods: {

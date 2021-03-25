@@ -20,6 +20,7 @@
             <v-btn color="red"> Register </v-btn>
           </v-card-actions>
         </v-card>
+        
       </v-row>
     </v-container>
   </div>
