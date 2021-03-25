@@ -54,6 +54,9 @@
             outlined
           ></v-textarea>
         </v-col>
+        <v-row>
+          <v-date-picker v-model="time"></v-date-picker>
+        </v-row>
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <v-date-picker
             v-model="date"
@@ -61,26 +64,23 @@
             min="2020-12-01"
             max="2030-12-31">
           </v-date-picker>
-          <p>{{date}}</p>   
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
             <v-time-picker
               v-model="time"
               format="24hr">
             </v-time-picker>
-            <p>{{ time }}</p>
         </v-col>
         <v-col xs="12" sm="12" md="6" offset-md="3">
           <v-btn color="success" :disabled="!formisValid" type="submit">
             Create MeetUp
           </v-btn>
-          {{ submittableDateTime }}
         </v-col>
       </v-row>
   </v-form>
 </template>
 <script>
-import moment from 'moment'
+
 export default {
   
   data: ()=> ({
@@ -96,7 +96,7 @@ export default {
 
       description: '',
       descRules: [(v) => !!v || "Description is required"],
-      date: new moment().format(),
+      date: new Date(),
       time: new Date()
   }),
   
@@ -106,6 +106,7 @@ export default {
           title: this.title,
           location: this.location,
           imageUrl: this.imageUrl,
+          description: this.description,
           date: this.submittableDateTime
         }
 

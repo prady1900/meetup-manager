@@ -11,15 +11,9 @@
           >
           </v-img>
           <v-card-text class="text--primary">
-
-            <div>
-              
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-              laboriosam blanditiis sunt magnam dolor modi tenetur in sed, quo
-              ducimus, architecto unde nulla repudiandae pariatur ipsam facere,
-              soluta beatae. Delectus!
+            <div class="info--text">{{ meetup.date | date }} - {{ meetup.location }}</div>
+            <div> {{meetup.description}}</div>
             
-            </div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>

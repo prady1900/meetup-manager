@@ -18,13 +18,13 @@
               <v-card-title color="black">
                 <div>
                   <h2>{{ meet.title }}</h2>
-                  <div>{{ meet.date }}</div>
+                  <div>{{ meet.date | date }}</div>
                 </div>
               </v-card-title>
             </v-img>
             <v-card-text class="text--primary">
               <div>
-                {{meet.desc}}
+                {{meet.description}}
               </div>
             </v-card-text>
             <v-card-actions>
