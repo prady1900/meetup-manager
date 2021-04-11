@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import firebase from 'firebase/app'
+require('firebase/auth');
 
 Vue.use(Vuex)
 
@@ -23,10 +24,9 @@ export const store = new Vuex.Store({
         description: 'sdaigsdogffgasgfukagdfgaigsd9asuda'
       }
     ],
-    user: {
-      id: 'dsfsdf',
-      registeredMeetUps: ['0'],
-    }
+    user: null,
+    loading: false,
+    error: null,
   },
   getters: {
     loadedMeetUps(state) {
@@ -43,6 +43,9 @@ export const store = new Vuex.Store({
           return meetup.id === meetUpId
         })
       }
+    },
+    user (state) {
+      return state.user
     }
   },
   mutations: {
@@ -51,6 +54,15 @@ export const store = new Vuex.Store({
     },
     setUser(state, payload){
       state.user = payload
+    },
+    setLoading(state, payload){
+      state.loading = payload
+    },
+    setError(state, payload){
+      state.error = payload
+    },
+    clearError(state){
+      state.error = null
     }
   },
   actions: {
@@ -68,10 +80,14 @@ export const store = new Vuex.Store({
       commit('createMeetUp', meetUps)
     },
     signUserUp ({commit}, payload) {
-      console.log("values", payload.password, payload.email)
+      
+      commit('setLoading',true)
+
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(
           user => {
+            commit('clearError')
+            commit('setLoading',false)
             const newUser = {
               id: user.uid,
               registeredMeetups: []
@@ -81,10 +97,34 @@ export const store = new Vuex.Store({
         )
         .catch(
           error => {
+            commit('setLoading',false)
+            commit('setError', error)
             console.log(error)
           }
         )
     },
+    signUserIn({commit}, payload){
+
+      commit('setLoading',true)
+
+      firebase.auth().signInWithEmailAndPassword(payload.email,payload.password).then(
+        user => {
+          commit('clearError')
+          commit('setLoading',false)
+          const newUser = {
+            id: user.uid,
+            registeredMeetups:[]
+          }
+          commit('setUser',newUser)
+        }
+      ).catch(
+        error => {
+          commit('setLoading',false)
+          commit('setError', error)
+          console.log(error);
+        }
+      )
+    }
   },
 
 

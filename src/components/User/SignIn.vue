@@ -1,16 +1,7 @@
 <template>
   
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form ref="form" v-model="valid" lazy-validation @submit.prevent>
   <v-row>
-    <v-col xs="12" sm="12" md="6" offset-md="3">
-        <v-text-field
-        v-model="name"
-        :counter="10"
-        :rules="nameRules"
-        label="Name"  
-        required
-      ></v-text-field>
-    </v-col>
     
     <v-col xs="12" sm="12" md="6" offset-md="3">
         <v-text-field
@@ -29,25 +20,15 @@
       ></v-text-field>
     </v-col>
 
-    <v-col xs="12" sm="12" md="6" offset-md="3">
-        <v-text-field
-          v-model="confirmPassword"
-          :rules="[comparePass]"
-          label="Confirm Password"
-          required
-      ></v-text-field>
-    </v-col>
-
 
     <v-col xs="12" sm="12" md="6" offset-md="3">
         <v-btn
       :disabled="!formisvalid"
       color="success"
       class="mr-4"
-      @click="onSignUp"
-      type="submit"
+      @click="onSignIn"
     >
-      SignUp
+      Sign In
     </v-btn>
     </v-col>
     
@@ -73,26 +54,31 @@ export default {
       ],
     
     password: '',
-    confirmPassword:''
   }),
 
   computed:{
-    comparePass(){
-      return this.password !== this.confirmPassword ? 'Password Do not Match' : ''
-    },
     formisvalid(){
       return this.name !== ' '&&
       this.email !== ' '&&
-      this.password !==' '&&
-      this.confirmPassword !== ''
+      this.password !==' '
+    },
+    user(){
+      return this.$store.getters.user
+    }
+  },
+  watch:{
+    user(value){
+      if(value !== null  && value !== undefined){
+        this.$router.push('/')
+      }
     }
   },
 
   methods: {
-    onSignUp(){
+    onSignIn(){
       this.$refs.form.validate()
       // Vuex
-      this.$store.dispatch('signUserUp',{email: this.email, password: this.password})
+      this.$store.dispatch('signUserIn',{email: this.email, password: this.password})
     }
   }, 
 

@@ -8,7 +8,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn text v-for="item in menus" :key="item.title" :to="item.link"
+        <v-btn text v-for="item in menuItems" :key="item.title" :to="item.link"
         class="hidden-sm-and-down white--text" >
           <v-icon left>{{ item.icon }}</v-icon>
           {{ item.title }}
@@ -36,7 +36,7 @@
         <v-list>
           <v-list dense>
             <v-list-item
-              v-for="item in menus"
+              v-for="item in menuItems"
               :key="item.title"
               link
               router
@@ -66,13 +66,26 @@ export default {
   data: () => ({
     //
     slide: false,
-    menus: [
+  }),
+  computed:{
+    menuItems(){
+      let menus = [
+      
+      { icon: "face", title: "Sign up", link: "/signup" },
+      { icon: "lock_open", title: "Sign in", link: "/signin" },
+    ]
+    if(this.userAuthenticated){
+      menus = [
       { icon: "supervisor_account", title: "View Meetups", link: "/meetups" },
       { icon: "room", title: "Organize Meetup", link: "/meetup/new" },
       { icon: "person", title: "Profile", link: "/profile" },
-      { icon: "face", title: "Sign up", link: "/signup" },
-      { icon: "lock_open", title: "Sign in", link: "/signin" },
-    ],
-  }),
+      ]
+    }
+    return menus
+    },
+    userAuthenticated(){
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    }
+  }
 };
 </script>
