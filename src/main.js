@@ -6,13 +6,13 @@ import vuetify from './plugins/vuetify'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import DateFilter from './filters/date'
 import * as firebase from 'firebase/app'
-import AlertCmp from './components/Shared/alert.vue'
+import AlertCmp from './components/Shared/alert1.vue'
 
 
 Vue.config.productionTip = false
 Vue.filter('date',DateFilter)
 
-Vue.component(AlertCmp)
+Vue.component('app-alert',AlertCmp)
 
 new Vue({
   router,

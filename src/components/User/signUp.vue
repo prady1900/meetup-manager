@@ -1,7 +1,15 @@
 <template>
-  
   <v-form ref="form" v-model="valid" lazy-validation @submit.prevent>
-  <v-row>
+  <v-container>
+  
+    <v-row v-if="error">
+      <v-col>
+      <app-alert xs="12" sm="12" md="3" offset-md="2"
+      @dismmised="onDismissed" v-text="error.message">
+      </app-alert>
+    </v-col>
+    </v-row>
+    <v-row>
     <v-col xs="12" sm="12" md="6" offset-md="3">
         <v-text-field
         v-model="name"
@@ -41,17 +49,22 @@
 
     <v-col xs="12" sm="12" md="6" offset-md="3">
         <v-btn
-      :disabled="!formisvalid"
+      :disabled="loading"
+      :loading="loading"
       color="success"
       class="mr-4"
       @click="onSignUp"
     >
       SignUp
+      <template v-slot:loader>
+        <span>Loading...</span>
+      </template>
     </v-btn>
     </v-col>
     
 
   </v-row>
+  </v-container>
   </v-form>
 
 </template>
@@ -87,6 +100,12 @@ export default {
     },
     user(){
       return this.$store.getters.user
+    },
+    error(){
+      return this.$store.getters.error
+    },
+    loading(){
+      return this.$store.getters.loading
     }
   },
   watch:{
@@ -102,6 +121,10 @@ export default {
       this.$refs.form.validate()
       // Vuex
       this.$store.dispatch('signUserUp',{email: this.email, password: this.password})
+    },
+    onDismissed(){
+      console.log("Dismmied Alert")
+      this.$store.dispatch('clearError')
     }
   }, 
 
