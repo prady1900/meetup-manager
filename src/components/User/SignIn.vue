@@ -24,7 +24,6 @@
     <v-col xs="12" sm="12" md="6" offset-md="3">
         <v-text-field
           v-model="password"
-          :rules="passRules"
           label="Password"
           required
       ></v-text-field>
@@ -42,7 +41,7 @@
 
     <v-col xs="12" sm="12" md="6" offset-md="3">
         <v-btn
-      :disabled="!valid"
+      :disabled="!formisvalid"
       color="success"
       class="mr-4"
       @click="onSignUp"
@@ -80,6 +79,12 @@ export default {
   computed:{
     comparePass(){
       return this.password !== this.confirmPassword ? 'Password Do not Match' : ''
+    },
+    formisvalid(){
+      return this.name !== ' '&&
+      this.email !== ' '&&
+      this.password !==' '&&
+      this.confirmPassword !== ''
     }
   },
 
@@ -87,8 +92,10 @@ export default {
     onSignUp(){
       this.$refs.form.validate()
       // Vuex
+      this.$store.dispatch('signUserUp',{email: this.email, password: this.password})
     }
   }, 
+
     
   
 }
