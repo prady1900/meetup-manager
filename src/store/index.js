@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import firebase from 'firebase/app'
 require('firebase/auth');
+require('firebase/database')
 
 Vue.use(Vuex)
 
@@ -55,6 +56,9 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    setLoadedMeetups(state,payload){
+      state.loadedMeetUps = payload
+    },
     createMeetUp(state, payload) {
       state.loadedMeetUps.push(payload)
     },
@@ -72,18 +76,52 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    loadMeetUpFromFB({commit}){
+      commit('setLoading', true),
+      firebase.database().ref('meetups').once('value')
+      .then(
+        (data) =>{
+          const meetUPSFb = []
+          const obj = data.val()
+          for(let key in obj){
+            meetUPSFb.push({
+              id: key,
+              title: obj[key].title,
+              description: obj[key].description,
+              imageUrl: obj[key].imageUrl,
+              date: obj[key].date
+            })
+          }
+          commit('setLoading',false)
+          commit('setLoadedMeetups', meetUPSFb);
+
+        }
+      ).catch(
+        (error) =>{
+          console.log(error)
+        }
+      )
+    },
     createMeetUp({ commit }, payload) {
       const meetUps = {
         title: payload.title,
         location: payload.location,
         imageUrl: payload.imageUrl,
         description: payload.description,
-        date: payload.date,
-        id: 'dsfsdfsdf'
+        date: payload.date.toISOString(),
       }
       //Reach Out Firebase
-      console.log(meetUps)
-      commit('createMeetUp', meetUps)
+      firebase.database().ref('meetups').push(meetUps)
+      .then((data)=>{
+        const key = data.key;
+        console.log(data);
+        commit('createMeetUp', {
+          ...meetUps,
+          id:key
+        })
+      }).catch((error)=>{
+        console.log(error)
+      })   
     },
     signUserUp ({commit}, payload) {
       
@@ -130,6 +168,9 @@ export const store = new Vuex.Store({
           console.log(error);
         }
       )
+    },
+    autoSignIn({commit},payload){
+      commit('setUser',{id:payload.uid, registeredMeetups:[]})
     },
     clearError({commit}){
       commit('clearError')

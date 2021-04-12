@@ -4,12 +4,19 @@
       <v-app-bar app color="primary">
         <v-app-bar-nav-icon @click.stop="slide = !slide"></v-app-bar-nav-icon>
         <v-toolbar-title>
-          <router-link to="/" tag ="span" style="cursor: pointer">MeetUps</router-link>
+          <router-link to="/" tag="span" style="cursor: pointer"
+            >MeetUps</router-link
+          >
         </v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn text v-for="item in menuItems" :key="item.title" :to="item.link"
-        class="hidden-sm-and-down white--text" >
+        <v-btn
+          text
+          v-for="item in menuItems"
+          :key="item.title"
+          :to="item.link"
+          class="hidden-sm-and-down white--text"
+        >
           <v-icon left>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
@@ -45,9 +52,16 @@
               <v-list-item-icon>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
-
               <v-list-item-content>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-cancel</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Logout</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -67,25 +81,31 @@ export default {
     //
     slide: false,
   }),
-  computed:{
-    menuItems(){
+  computed: {
+    menuItems() {
       let menus = [
-      
-      { icon: "face", title: "Sign up", link: "/signup" },
-      { icon: "lock_open", title: "Sign in", link: "/signin" },
-    ]
-    if(this.userAuthenticated){
-      menus = [
-      { icon: "supervisor_account", title: "View Meetups", link: "/meetups" },
-      { icon: "room", title: "Organize Meetup", link: "/meetup/new" },
-      { icon: "person", title: "Profile", link: "/profile" },
-      ]
-    }
-    return menus
+        { icon: "face", title: "Sign up", link: "/signup" },
+        { icon: "lock_open", title: "Sign in", link: "/signin" },
+      ];
+      if (this.userAuthenticated) {
+        menus = [
+          {
+            icon: "supervisor_account",
+            title: "View Meetups",
+            link: "/meetups",
+          },
+          { icon: "room", title: "Organize Meetup", link: "/meetup/new" },
+          { icon: "person", title: "Profile", link: "/profile" },
+        ];
+      }
+      return menus;
     },
-    userAuthenticated(){
-      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-    }
-  }
+    userAuthenticated() {
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
+    },
+  },
 };
 </script>

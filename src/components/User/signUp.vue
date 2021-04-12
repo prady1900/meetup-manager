@@ -3,9 +3,9 @@
   <v-container>
   
     <v-row v-if="error">
-      <v-col>
-      <app-alert xs="12" sm="12" md="3" offset-md="2"
-      @dismmised="onDismissed" v-text="error.message">
+      <v-col xs="12" sm="12" md="6" offset-md="3">
+      <app-alert 
+      @dismissed="onDismissed" v-text="error.message">
       </app-alert>
     </v-col>
     </v-row>
