@@ -20,6 +20,11 @@
           <v-icon left>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
+        <v-btn text class="hidden-sm-and-down white--text" v-if="userAuthenticated" 
+        @click="onLogout">
+           <v-icon left>mdi-cancel</v-icon>
+           Logout
+        </v-btn>
       </v-app-bar>
       <v-main>
         <router-view></router-view>
@@ -56,7 +61,7 @@
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item>
+            <v-list-item v-if="userAuthenticated" @click="onLogout">
               <v-list-item-icon>
                 <v-icon>mdi-cancel</v-icon>
               </v-list-item-icon>
@@ -89,13 +94,9 @@ export default {
       ];
       if (this.userAuthenticated) {
         menus = [
-          {
-            icon: "supervisor_account",
-            title: "View Meetups",
-            link: "/meetups",
-          },
-          { icon: "room", title: "Organize Meetup", link: "/meetup/new" },
-          { icon: "person", title: "Profile", link: "/profile" },
+          {icon: "supervisor_account",title: "View Meetups",link: "/meetups"},
+          {icon: "room", title: "Organize Meetup", link: "/meetup/new" },
+          {icon: "person", title: "Profile", link: "/profile" },
         ];
       }
       return menus;
@@ -107,5 +108,10 @@ export default {
       );
     },
   },
+  methods:{
+    onLogout(){
+      this.$store.dispatch('logout')
+    }
+  }
 };
 </script>
