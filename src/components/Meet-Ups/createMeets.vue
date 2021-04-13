@@ -124,10 +124,9 @@ export default {
         const meetUpData ={
           title: this.title,
           location: this.location,
-          imageUrl: this.imageUrl,
           description: this.description,
           date: this.submittableDateTime,
-          image: null
+          image: this.image
         }
 
         console.log(meetUpData)

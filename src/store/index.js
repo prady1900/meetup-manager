@@ -2,8 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import firebase from 'firebase/app'
+import { lastIndexOf } from 'core-js/core/array';
 require('firebase/auth');
-require('firebase/database')
+require('firebase/database');
+require('firebase/storage')
 
 Vue.use(Vuex)
 
@@ -117,12 +119,17 @@ export const store = new Vuex.Store({
       .then((data)=>{
         const key = data.key;
         console.log(data);
-        commit('createMeetUp', {
-          // ...meetUps,
-          // id:key,
-          return key
-        })
-      }).catch((error)=>{
+        // commit('createMeetUp', {
+        //   ...meetUps,
+        //   id:key,
+        // })
+        return key
+      }).then(key =>{
+        const filename = payload.image.name
+        const ext = filename.slice(filename.lastIndexOf('.'))
+        return firebase.storage().ref('meetups/'+key+'.'+ext)
+      }).then(ima)
+      .catch((error)=>{
         console.log(error)
       })   
     },
