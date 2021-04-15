@@ -1,9 +1,16 @@
 <template>
   <div id="meetUpsPage">
     <v-container>
-      <v-row>
-        <v-card-title>{{meetup.title}}</v-card-title>
-        <v-card class="mx-auto" max-width="">
+      <v-row >
+        
+        <v-card class="mx-auto" elevation="8">
+          <v-card-title>{{meetup.title}}
+            <template v-if="true">
+            <v-spacer></v-spacer>
+            <app-edit-dialog></app-edit-dialog>
+          </template>
+          </v-card-title>
+          
           <v-img
             class="white--text align-end"
             height="400px"
@@ -29,16 +36,25 @@
 <script>
 export default {
   props:['id'],
-  computed:{
+  computed :{
     meetup(){
       return this.$store.getters.loadedMeetUp(this.id)
+    },
+    userIsAuthenticated(){
+      return this.$store.getters.users !== null && this.$store.getters.users !== undefined
+    },
+    userIsCreator(){
+      if(!this.userIsAuthenticated()){
+        return false
+      }
+        return this.$store.getters.user.id === this.meetup.creatorId
     }
   }
+    
 };
 </script>
 
+
 <style scoped>
-.meetUpsPage {
-  height: 100vh;
-}
+
 </style>

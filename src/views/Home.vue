@@ -20,7 +20,7 @@
               <v-carousel-item
                 v-for="img in featuredMeetUps"
                 :key="img.id"
-                :src="img.imgUrl"
+                :src="img.imageUrl"
                 v-on:click="loadItem(img.id)"
               >
                 <div class="title">{{ img.title }}</div>

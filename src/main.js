@@ -1,18 +1,21 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import { store } from "./store/index";
-import vuetify from "./plugins/vuetify";
-import "material-design-icons-iconfont/dist/material-design-icons.css";
-import DateFilter from "./filters/date";
-import * as firebase from "firebase/app";
+import Vue from "vue"
+import App from "./App.vue"
+import router from "./router"
+import { store } from "./store/index"
+import vuetify from "./plugins/vuetify"
+import "material-design-icons-iconfont/dist/material-design-icons.css"
+import DateFilter from "./filters/date"
+import * as firebase from "firebase/app"
 import AlertCmp from "./components/Shared/alert1.vue";
-require("firebase/auth");
+import EditMeetUpDetails from './components/Meet-Ups/Edit/EditDetails.vue'
 
-Vue.config.productionTip = false;
-Vue.filter("date", DateFilter);
+require("firebase/auth")
 
-Vue.component("app-alert", AlertCmp);
+Vue.config.productionTip = false
+Vue.filter("date", DateFilter)
+
+Vue.component("app-alert", AlertCmp)
+Vue.component("app-edit-dialog", EditMeetUpDetails)
 
 new Vue({
   router,
