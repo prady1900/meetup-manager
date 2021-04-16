@@ -87,8 +87,12 @@ export default {
         return
       }
       this.dialog =false
-
-    }
+      this.$store.dispatch('updateMeetupData',{
+        id:this.meetup.id,
+        title: this.meetup.editedTitle,
+        description: this.meetup.editedDescription
+      })
+    } 
   }
 }
 </script>
