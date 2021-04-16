@@ -17,7 +17,7 @@
           <v-card-title>{{meetup.title}}
             <template v-if="userIsCreator">
             <v-spacer></v-spacer>
-            <app-edit-dialog :meetup= "meetup"></app-edit-dialog>
+            <app-edit-dialog :meetup="meetup"></app-edit-dialog>
           </template>
           </v-card-title>
           
@@ -28,7 +28,8 @@
           >
           </v-img>
           <v-card-text class="text--primary">
-            <div class="info--text">{{ meetup.date | date }} - {{ meetup.location }}</div>
+            <div class="info--text">{{ meetup.date | date }} -</div>
+            <div> {{meetup.location}}</div>
             <div> {{meetup.description}}</div>
             
           </v-card-text>
@@ -45,7 +46,7 @@
 
 <script>
 export default {
-  props:["id"],
+  props:['id'],
   computed :{
     meetup () {
       return this.$store.getters.loadedMeetUp(this.id)

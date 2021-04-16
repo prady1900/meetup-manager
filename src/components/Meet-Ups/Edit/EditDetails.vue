@@ -30,7 +30,7 @@
                   class="mx-2"
                   label="MeetUp Name"
                   v-model="editedTitle"
-                  required
+        
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -59,8 +59,7 @@
                   <v-col md="1" >
                     <v-btn
                       text
-                      color="success"
-                      v-
+                      color="green"
                       @click="onSaveChanges">Save</v-btn>
                   </v-col>
                 </v-row>
@@ -73,8 +72,8 @@
 </template>
 <script>
 export default {
-    props:['meetup'],
-    data () {
+  props: ['meetup'],
+  data () {
       return {
         dialog: false,
         editedTitle: this.meetup.title,
@@ -86,13 +85,13 @@ export default {
       if(this.editedTitle.trim() === '' || this.editedDescription.trim() === ''){
         return
       }
-      this.dialog =false
-      this.$store.dispatch('updateMeetupData',{
-        id:this.meetup.id,
-        title: this.meetup.editedTitle,
-        description: this.meetup.editedDescription
-      })
-    } 
-  }
+     console.log('from onchange',this.editedTitle, this.editedDescription)
+     this.dialog = false
+     this.$store.dispatch('updateMeetupData',{
+     id:this.meetup.id,
+     title: this.editedTitle,
+     description: this.editedDescription })
+     } 
+  } 
 }
 </script>

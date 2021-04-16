@@ -63,17 +63,17 @@ export const store = new Vuex.Store({
     createMeetUp(state, payload) {
       state.loadedMeetUps.push(payload)
     },
-    updateMeetup(state,payload){
-      const meetup = state.loadedMeetUps.find(meetup =>{
+    updateMeetup (state, payload) {
+      const meetup = state.loadedMeetUps.find((meetup) => {
         return meetup.id === payload.id
       })
-      if(payload.title){
+      if (payload.title) {
         meetup.title = payload.title
       }
-      if(payload.description){
+      if (payload.description) {
         meetup.description = payload.description
       }
-      if(payload.date){
+      if (payload.date) {
         meetup.date = payload.date
       }
     },
@@ -179,6 +179,7 @@ export const store = new Vuex.Store({
     updateMeetupData({commit},payload){
       commit('setLoading',true)
       const updateObj ={}
+      
       if(payload.title){
         updateObj.title = payload.title
       }
@@ -188,12 +189,16 @@ export const store = new Vuex.Store({
       if(payload.date){
         updateObj.date = payload.date
       }
-      firebase.database().ref('meetups').child(payload.id).update(updateObj).then(()=>{
+      firebase.database().ref('meetups').child(payload.id).update(updateObj)
+      .then(()=>{
+        console.log(payload)
         commit('setLoading',false)
         commit('updateMeetup',payload)
+        console.log("Successfully added to FB")
       }).catch((error)=>{
         console.log(error)
         commit('setLoading',false)
+        console.log("Not added to FB")
       })
     },
     signUserIn({commit}, payload){
