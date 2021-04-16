@@ -40,6 +40,7 @@
 
 <script>
 export default {
+  props:[],
   computed: {
     meetups() {
       console.log(this.$store.getters.loadedMeetUps)

@@ -1,13 +1,23 @@
 <template>
   <div id="meetUpsPage">
     <v-container>
-      <v-row >
-        
+      <v-row justify="center" align="center" v-if="loading">
+        <v-col md="6" offset-md="3">
+          <v-progress-circular
+            justify="center"
+            align="center"
+            indeterminate
+            color="green">
+          </v-progress-circular>
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col>
         <v-card class="mx-auto" elevation="8">
           <v-card-title>{{meetup.title}}
-            <template v-if="true">
+            <template v-if="userIsCreator">
             <v-spacer></v-spacer>
-            <app-edit-dialog></app-edit-dialog>
+            <app-edit-dialog :meetup= "meetup"></app-edit-dialog>
           </template>
           </v-card-title>
           
@@ -27,7 +37,7 @@
             <v-btn color="red"> Register </v-btn>
           </v-card-actions>
         </v-card>
-        
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -35,26 +45,30 @@
 
 <script>
 export default {
-  props:['id'],
+  props:["id"],
   computed :{
-    meetup(){
+    meetup () {
       return this.$store.getters.loadedMeetUp(this.id)
     },
-    userIsAuthenticated(){
-      return this.$store.getters.users !== null && this.$store.getters.users !== undefined
+    userIsAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
     },
-    userIsCreator(){
-      if(!this.userIsAuthenticated()){
+    userIsCreator () {
+      if(!this.userIsAuthenticated){
         return false
       }
         return this.$store.getters.user.id === this.meetup.creatorId
-    }
+    },
+    loading() {
+      return this.$store.getters.loading;
+    },
   }
     
 };
 </script>
 
-
 <style scoped>
-
+.meetUpsPage{
+  height: 100vh;
+}
 </style>
