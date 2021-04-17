@@ -24,12 +24,14 @@
             </v-img>
             <v-card-text class="text--primary">
               <div>
-                {{meet.description}}
+                {{ meet.description }}
               </div>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="orange" router :to="'/meetup/'+ meet.id"> View MeetUp </v-btn>
+              <v-btn color="orange" router :to="'/meetup/' + meet.id">
+                View MeetUp
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-lazy>
@@ -40,11 +42,11 @@
 
 <script>
 export default {
-  props:[],
+  props: [],
   computed: {
     meetups() {
-      console.log(this.$store.getters.loadedMeetUps)
-      return this.$store.getters.loadedMeetUps
+      console.log(this.$store.getters.loadedMeetUps);
+      return this.$store.getters.loadedMeetUps;
     },
   },
 };

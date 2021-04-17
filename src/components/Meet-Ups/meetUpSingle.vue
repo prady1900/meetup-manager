@@ -7,37 +7,39 @@
             justify="center"
             align="center"
             indeterminate
-            color="green">
+            color="green"
+          >
           </v-progress-circular>
         </v-col>
       </v-row>
       <v-row v-else>
         <v-col>
-        <v-card class="mx-auto" elevation="8">
-          <v-card-title>{{meetup.title}}
-            <template v-if="userIsCreator">
-            <v-spacer></v-spacer>
-            <app-edit-dialog :meetup="meetup"></app-edit-dialog>
-          </template>
-          </v-card-title>
-          
-          <v-img
-            class="white--text align-end"
-            height="400px"
-            :src="meetup.imageUrl"
-          >
-          </v-img>
-          <v-card-text class="text--primary">
-            <div class="info--text">{{ meetup.date | date }} -</div>
-            <div> {{meetup.location}}</div>
-            <div> {{meetup.description}}</div>
-            
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="red"> Register </v-btn>
-          </v-card-actions>
-        </v-card>
+          <v-card class="mx-auto" elevation="8">
+            <v-card-title
+              >{{ meetup.title }}
+              <template v-if="userIsCreator">
+                <v-spacer></v-spacer>
+                <app-edit-dialog :meetup="meetup"></app-edit-dialog>
+              </template>
+            </v-card-title>
+
+            <v-img
+              class="white--text align-end"
+              height="400px"
+              :src="meetup.imageUrl"
+            >
+            </v-img>
+            <v-card-text class="text--primary">
+              <div class="info--text">{{ meetup.date | date }} </div> 
+              <app-edit-date :meetup="meetup"></app-edit-date>
+              <div>{{ meetup.location }}</div>
+              <div>{{ meetup.description }}</div>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red"> Register </v-btn>
+            </v-card-actions>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -46,30 +48,32 @@
 
 <script>
 export default {
-  props:['id'],
-  computed :{
-    meetup () {
-      return this.$store.getters.loadedMeetUp(this.id)
+  props: ["id"],
+  computed: {
+    meetup() {
+      return this.$store.getters.loadedMeetUp(this.id);
     },
-    userIsAuthenticated () {
-      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    userIsAuthenticated() {
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
     },
-    userIsCreator () {
-      if(!this.userIsAuthenticated){
-        return false
+    userIsCreator() {
+      if (!this.userIsAuthenticated) {
+        return false;
       }
-        return this.$store.getters.user.id === this.meetup.creatorId
+      return this.$store.getters.user.id === this.meetup.creatorId;
     },
     loading() {
       return this.$store.getters.loading;
     },
-  }
-    
+  },
 };
 </script>
 
 <style scoped>
-.meetUpsPage{
+.meetUpsPage {
   height: 100vh;
 }
 </style>
