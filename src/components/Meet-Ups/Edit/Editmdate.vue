@@ -25,10 +25,8 @@
             v-on="on"
           ></v-text-field>
         </template>
-    <v-card>
-        <v-date-picker
-         
-        >
+    <v-card>    
+        <v-date-picker v-model="date1">
         </v-date-picker>
         <v-card-actions>
                     <v-btn
@@ -44,11 +42,6 @@
         </v-card-actions>
     </v-card>
       </v-dialog>
-    
-          
-        
-        
-        
     </v-card>
   </v-dialog>
 </template>
@@ -59,38 +52,48 @@ export default {
   data() {
     return {
       editDialog: false,
-      editableDate: null,
+      editableDate: this.meetup.date.toISOString().substr(0, 10),
       modal: false,
-      date: new Date().toISOString()
+      date1: this.meetup.date
     };
   },
   methods: {
     onSaveChanges() {
-      const newDate = new Date(this.meetup.date);
-      const newDay = new Date(this.editableDate).getUTCDate();
-      const newMonth = new Date(this.editableDate).getUTCMonth();
-      const newYear = new Date(this.editableDate).getUTCDate();
+        
+        
+        const rnewDate = this.meetup.date
+        const newDate = new Date(this.date1)
+        console.log(newDate)
+        const newDay = newDate.getDay()
+        const newMonth = newDate.getMonth()+1
+        const newYear = newDate.getFullYear()
 
-      newDate.setUTCDate(newDay);
-      newDate.setUTCDate(newMonth);
-      newDate.setUTCDate(newYear);
+        var tempdate = newYear+"-"+newMonth+"-"+newDay
+        this.editableDate = tempdate+''+rnewDate.substr(10)
+
+        console.log("0",this.editableDate)
+        console.log("1",this.date1)
+
+            this.editDialog= false;
+      console.log("2",newDate)
       this.$store.dispatch("updateMeetupData", {
         id: this.meetup.id,
-        date: newDate,
+        date: this.editableDate.toISOString(),
       })
       
     },
   },
   created() {
-     let date = new Date(this.meetup.date) //set Date to the date of meetup
+        let date = this.date1 //set Date to the date of meetup
+        let day = date.getDay() // +1 cuz the days are counted from 0-30
+        let month = date.getMonth()  // +1 cuz the months are counted from 0 to 11
+        let year = date.getFullYear()
 
-      let day = date.getUTCDate() // +1 cuz the days are counted from 0-30
-      let month = date.getUTCMonth()+1  // +1 cuz the months are counted from 0 to 11
-      let year = date.getUTCFullYear()
-        this.editableDate = year+"-"+month+"-"+day
-  },
-  
-  
+        var tempdate = year+"-"+month+"-"+day
+        this.editableDate  = (tempdate + '' + this.date1.substr(10))
+        console.log("3",this.editableDate)
+  }
+ 
 };
 </script>
 

@@ -9,6 +9,7 @@ import * as firebase from "firebase/app"
 import AlertCmp from "./components/Shared/alert1.vue";
 import EditMeetUpDetails from './components/Meet-Ups/Edit/EditDetails.vue'
 import EditMeetupDate from './components/Meet-Ups/Edit/Editmdate.vue'
+import Registermeetup from './components/Meet-Ups/Registration/RegistrationD.vue'
 
 require("firebase/auth")
 
@@ -18,6 +19,7 @@ Vue.filter("date", DateFilter)
 Vue.component("app-alert", AlertCmp)
 Vue.component("app-edit-dialog", EditMeetUpDetails)
 Vue.component("app-edit-date", EditMeetupDate)
+Vue.component("app-register-meet", Registermeetup)
 
 new Vue({
   router,

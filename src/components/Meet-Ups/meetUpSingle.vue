@@ -29,15 +29,21 @@
               :src="meetup.imageUrl"
             >
             </v-img>
+            
             <v-card-text class="text--primary">
-              <div class="info--text">{{ meetup.date | date }} </div> 
-              <app-edit-date :meetup="meetup"></app-edit-date>
-              <div>{{ meetup.location }}</div>
+              <v-row justify-md="space-between">
+                <v-col md="4"><div class="info--text">{{ meetup.date | date }} </div> </v-col>
+                <v-col md="2"><app-edit-date :meetup="meetup"></app-edit-date></v-col>
+              </v-row>
+              
+              <h3>Location:</h3>
+              <div> {{ meetup.location }}</div>
+              <h3>Description:</h3>
               <div>{{ meetup.description }}</div>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="red"> Register </v-btn>
+              <app-register-meet :meetupId="meetup.id"></app-register-meet>
             </v-card-actions>
           </v-card>
         </v-col>
