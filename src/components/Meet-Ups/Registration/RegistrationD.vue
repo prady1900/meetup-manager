@@ -2,7 +2,7 @@
   <v-dialog transition="dialog-top-transition" max-width="600px" v-model="regDialog">
     <template v-slot:activator="{ on, attrs }">
       <v-btn class="mx-2" color="primary" v-bind="attrs" small v-on="on">
-        {{userIsRegisterd ? 'Unregisterd' : 'Register'}}</v-btn
+        {{userIsRegisterd ? 'Unregister' : 'Register'}}</v-btn
       >
     </template>
     
