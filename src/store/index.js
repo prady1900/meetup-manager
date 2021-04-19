@@ -53,6 +53,7 @@ export const store = new Vuex.Store({
     error(state) {
       return state.error;
     },
+    
     loading(state) {
       return state.loading;
     },
@@ -231,6 +232,18 @@ export const store = new Vuex.Store({
           commit('setLoading', false)
         })
     },
+    forgotPass({commit},payload){
+      
+      firebase.auth().sendPasswordResetEmail(payload.email).then(()=>{
+        
+        console.log("Email Sent")
+      }).catch(error =>{
+        commit("setError", error);
+        console.log("Error Here",error)
+      })
+
+
+    },
     updateMeetupData({ commit }, payload) {
       commit("setLoading", true);
       const updateObj = {};
@@ -280,7 +293,7 @@ export const store = new Vuex.Store({
         .catch((error) => {
           commit("setLoading", false);
           commit("setError", error);
-          console.log(error);
+          console.log("Error Here",error);
         });
     },
     autoSignIn({ commit }, payload) {

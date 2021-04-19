@@ -7,6 +7,7 @@ import profile from '../components/User/Profile.vue'
 import createMeets from '../components/Meet-Ups/createMeets.vue'
 import meetups from '../components/Meet-Ups/meetUps.vue'
 import meetUpSingle from '../components/Meet-Ups/meetUpSingle'
+import restmsg from '../components/User/restmsg'
 import AuthGuard from './auth-guard'
 
 Vue.use(VueRouter)
@@ -49,6 +50,11 @@ const routes = [
     path: '/meetups',
     name: 'meetups',
     component: meetups
+  },
+  {
+    path: '/resetMsg',
+    name: 'restmsg',
+    component: restmsg
   },
 
 

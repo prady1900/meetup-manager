@@ -26,6 +26,7 @@
           :rules="emailRules"
           label="E-mail"
           required
+          
       ></v-text-field>
     </v-col>
 
@@ -34,6 +35,9 @@
           v-model="password"
           label="Password"
           required
+          :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="show2 ? 'text' : 'password'"
+          @click:append="show2 = !show2"
       ></v-text-field>
     </v-col>
 
@@ -43,6 +47,9 @@
           :rules="[comparePass]"
           label="Confirm Password"
           required
+          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="show1 ? 'text' : 'password'"
+          @click:append="show1 = !show1"
       ></v-text-field>
     </v-col>
 
@@ -72,6 +79,8 @@
 <script>
 export default {
   data: ()=>({
+    show1: false,
+    show2: false,
     valid: true,
     name:'',
     nameRules:[

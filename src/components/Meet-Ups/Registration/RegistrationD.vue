@@ -25,7 +25,7 @@
         </v-card-actions>
     
       
-    </v-card>S
+    </v-card>
   </v-dialog>
 </template>
 
