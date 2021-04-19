@@ -192,6 +192,11 @@ export const store = new Vuex.Store({
             registeredMeetups: [],
             fbKeys: {}
           };
+          firebase.database().ref('/userName/' + user.user.uid).push(payload.name).then(()=>{
+            
+          }).catch((error)=>{
+            console.log(error)
+          })
           commit("setUser", newUser);
         })
         .catch((error) => {

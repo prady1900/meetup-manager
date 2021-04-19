@@ -129,7 +129,7 @@ export default {
     onSignUp(){
       this.$refs.form.validate()
       // Vuex
-      this.$store.dispatch('signUserUp',{email: this.email, password: this.password})
+      this.$store.dispatch('signUserUp',{email: this.email, password: this.password, name: this.name})
     },
     onDismissed(){
       console.log("Dismmied Alert")
