@@ -1,4 +1,5 @@
 <template>
+<div :style="myStyle">
   <v-container>
     <v-row wrap class="mb-2" v-for="meet in meetups" :key="meet.id">
       <v-col md="3"></v-col>
@@ -37,12 +38,21 @@
         </v-lazy>
       </v-col>
     </v-row>
+    
   </v-container>
+  </div>
 </template>
 
 <script>
 export default {
   props: [],
+  data(){
+    return{
+      myStyle:{
+            backgroundColor:"#ebebeb" 
+            }
+    }
+  },
   computed: {
     meetups() {
       console.log(this.$store.getters.loadedMeetUps);

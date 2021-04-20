@@ -1,4 +1,5 @@
 <template>
+<div :style="myStyle">
   <v-container>
     <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center">
       <v-col xs="12" md="3">
@@ -6,7 +7,8 @@
       </v-col>
     </v-row>
     <v-divider > </v-divider>
-    <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center">
+    <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center"
+    v-for="meet in meetups" :key="meet.id">
       <v-col xs="12" md="3" align-self="center">
         <v-avatar 
         color="primary"
@@ -20,7 +22,7 @@
       </v-col>
       <v-col xs="12" md="2" align-self="center">
         <div>Name:</div>
-        <div class="font-weight-medium">Pradnyesh</div>
+        <div class="font-weight-medium">{{meet.name[0]}}</div>
       </v-col>
     </v-row>
     <v-divider></v-divider>
@@ -62,11 +64,19 @@
       </v-col>
     </v-row>
   </v-container>
-  
+</div>
 </template>
 
 <script>
 export default {
+  data(){
+    return{
+      myStyle:{
+            height: "100vh", 
+            backgroundColor:"#ebebeb" 
+            }
+    }
+  },
 computed: {
     meetups() {
       console.log("I am profile",this.$store.getters.myMeetup);
@@ -77,6 +87,6 @@ computed: {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

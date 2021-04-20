@@ -118,7 +118,14 @@ export const store = new Vuex.Store({
       firebase.database().ref("meetups").on("value",(snapshot)=>{
         
         const myMeetUp = [];
+        const name1=[]
         const obj1 = snapshot.val()
+        firebase.database().ref("/userName/"+getters.user.id).on("value", (snapshot)=>{
+          snapshot.forEach((childSnap)=>{
+            name1.push(childSnap.val())
+            console.log("Hello from refs",name1)
+          });
+        })
         
         for(let key in obj1){
           if(getters.user.id === obj1[key].creatorId){
@@ -129,6 +136,7 @@ export const store = new Vuex.Store({
               description: obj1[key].description,
               imageUrl: obj1[key].imageUrl,
               date: obj1[key].date,
+              name: name1
             })
          } 
         }
@@ -221,7 +229,8 @@ export const store = new Vuex.Store({
           const newUser = {
             id: user.uid,
             registeredMeetups: [],
-            fbKeys: {}
+            fbKeys: {},
+            
           };
           firebase.database().ref('/userName/' + user.user.uid).push(payload.name).then(()=>{
             
@@ -322,7 +331,8 @@ export const store = new Vuex.Store({
           const newUser = {
             id: user.uid,
             registeredMeetups: [],
-            fbKeys: {}
+            fbKeys: {},
+            
           };
           commit("setUser", newUser);
         })
