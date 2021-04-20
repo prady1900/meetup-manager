@@ -1,6 +1,9 @@
 <template>
 <div :style="myStyle">
   <v-container>
+    <v-row>
+      
+    </v-row>
     <v-row wrap class="mb-2" v-for="meet in meetups" :key="meet.id">
       <v-col md="3"></v-col>
       <v-col md="6">
@@ -58,6 +61,7 @@ export default {
       console.log(this.$store.getters.loadedMeetUps);
       return this.$store.getters.loadedMeetUps;
     },
+    
   },
 };
 </script>

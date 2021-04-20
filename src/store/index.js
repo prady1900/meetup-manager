@@ -113,6 +113,8 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
+    
+    
     loadMyMeetsFromFB({commit,getters}){
       commit("setLoading", true)
       firebase.database().ref("meetups").on("value",(snapshot)=>{

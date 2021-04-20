@@ -59,6 +59,48 @@
                 {{ meet.description }}
               </div>
             </v-card-text>
+            <v-card-actions>
+              <v-bottom-sheet
+      v-model="sheet"
+      inset
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="orange"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Check Attendee List
+        </v-btn>
+      </template>
+      <v-sheet
+        class="text-center"
+        height="350px"
+      >
+        
+        <v-list>
+        
+        <v-list-item
+          v-for="tile in tiles"
+          :key="tile.title"
+          @click="sheet = false"
+        >
+          <v-list-item-title>{{ tile.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+       
+      <v-btn
+          class="mt-6"
+          text
+          color="error"
+          @click="sheet = !sheet"
+        >
+          close
+        </v-btn>
+      </v-sheet>
+    </v-bottom-sheet>
+            </v-card-actions>
           </v-card>
         </v-lazy>
       </v-col>
@@ -71,8 +113,16 @@
 export default {
   data(){
     return{
+      sheet: false,
+      tiles: [
+        {  title: 'Keep' },
+        { title: 'Inbox' },
+        { title: 'Hangouts' },
+        { title: 'Messenger' },
+        { title: 'Google+' },
+      ],
       myStyle:{
-            height: "100vh", 
+             
             backgroundColor:"#ebebeb" 
             }
     }
