@@ -5,9 +5,10 @@
         <h1>Profile Page</h1>
       </v-col>
     </v-row>
+    <v-divider > </v-divider>
     <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center">
       <v-col xs="12" md="3" align-self="center">
-        <v-avatar
+        <v-avatar 
         color="primary"
         size="72"
       >
@@ -17,17 +18,62 @@
         ></v-img>
       </v-avatar>
       </v-col>
-      <v-col xs="12" md="3" align-self="center">
+      <v-col xs="12" md="2" align-self="center">
         <div>Name:</div>
         <div class="font-weight-medium">Pradnyesh</div>
       </v-col>
     </v-row>
+    <v-divider></v-divider>
+    <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center">
+      <v-col xs="12" md="3">
+        <h2>Created MeetUp</h2>
+      </v-col>
+    </v-row>
+    
+    <v-row wrap class="mb-2" v-for="meet in meetups" :key="meet.id">
+      <v-col md="3"></v-col>
+      <v-col md="6">
+        <v-lazy
+          :options="{
+            threshold: 1.0,
+          }"
+          transition="fade-transition"
+        >
+          <v-card>
+            <v-img
+              class="black--text align-end"
+              height="200px"
+              :src="meet.imageUrl"
+            >
+              <v-card-title color="black">
+                <div>
+                  <h2>{{ meet.title }}</h2>
+                  <div>{{ meet.date | date }}</div>
+                </div>
+              </v-card-title>
+            </v-img>
+            <v-card-text class="text--primary">
+              <div>
+                {{ meet.description }}
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-lazy>
+      </v-col>
+    </v-row>
   </v-container>
+  
 </template>
 
 <script>
 export default {
-
+computed: {
+    meetups() {
+      console.log("I am profile",this.$store.getters.myMeetup);
+        
+      return this.$store.getters.myMeetup;
+    },
+  },
 }
 </script>
 

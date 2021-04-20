@@ -27,18 +27,22 @@ export const store = new Vuex.Store({
         description: "sdaigsdogffgasgfukagdfgaigsd9asuda",
       },
     ],
+    myMeetups:null,
     user: null,
     loading: false,
     error: null,
   },
   getters: {
+    myMeetup(state){
+      return state.myMeetups
+    },
     loadedMeetUps(state) {
       return state.loadedMeetUps.sort((meetupA, meetupB) => {
         return meetupA.date > meetupB.date;
       });
     },
     featuredMeetups(state) {
-      return state.loadedMeetUps.slice(0, 2);
+      return state.loadedMeetUps.slice(0, 5);
     },
     loadedMeetUp(state) {
       return (meetUpId) => {
@@ -75,6 +79,9 @@ export const store = new Vuex.Store({
     setLoadedMeetups(state, payload) {
       state.loadedMeetUps = payload;
     },
+    setMyLoadedMeetups(state, payload) {
+      state.myMeetups = payload;
+    },
     createMeetUp(state, payload) {
       state.loadedMeetUps.push(payload);
     },
@@ -106,6 +113,30 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
+    loadMyMeetsFromFB({commit,getters}){
+      commit("setLoading", true)
+      firebase.database().ref("meetups").on("value",(snapshot)=>{
+        
+        const myMeetUp = [];
+        const obj1 = snapshot.val()
+        
+        for(let key in obj1){
+          if(getters.user.id === obj1[key].creatorId){
+          console.log(obj1[key].creatorId,getters.user.id)
+            myMeetUp.push({
+              id: key,
+              title: obj1[key].title,
+              description: obj1[key].description,
+              imageUrl: obj1[key].imageUrl,
+              date: obj1[key].date,
+            })
+         } 
+        }
+        console.log("I am called",myMeetUp)
+        commit("setLoading", false)
+        commit("setMyLoadedMeetups", myMeetUp);
+      })
+    },
     loadMeetUpFromFB({ commit }) {
       commit("setLoading", true),
         firebase
@@ -331,6 +362,8 @@ export const store = new Vuex.Store({
     logout({ commit }) {
       firebase.auth().signOut();
       commit("setUser", null);
+      commit("myMeetups", null);
+
     },
     clearError({ commit }) {
       commit("clearError");
