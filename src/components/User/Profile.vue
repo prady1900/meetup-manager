@@ -115,11 +115,11 @@ export default {
     return{
       sheet: false,
       tiles: [
-        {  title: 'Keep' },
-        { title: 'Inbox' },
-        { title: 'Hangouts' },
-        { title: 'Messenger' },
-        { title: 'Google+' },
+        {  title: 'Ramesh' },
+        { title: 'Shyam' },
+        { title: 'Paarth' },
+        { title: 'Ram' },
+        { title: 'Rahil' },
       ],
       myStyle:{
              
