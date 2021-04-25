@@ -1,10 +1,20 @@
 <template>
-<div :style="myStyle">
-  <v-container>
-    <v-row>
-      
-    </v-row>
-    <v-row wrap class="mb-2" v-for="meet in meetups" :key="meet.id">
+<div >
+  <div >
+    <v-container>
+      <v-row  justify="center" align="center">
+        <v-col md="6" offset-md="3">
+          <v-progress-circular
+            justify="center"
+            align="center"
+            indeterminate
+            color="green"
+            v-if="loading"
+          >
+          </v-progress-circular>
+        </v-col>
+      </v-row>
+    <v-row  wrap class="mb-2" v-for="meet in meetups" :key="meet.id">
       <v-col md="3"></v-col>
       <v-col md="6">
         <v-lazy
@@ -13,7 +23,7 @@
           }"
           transition="fade-transition"
         >
-          <v-card>
+          <v-card v-if="!loading">
             <v-img
               class="black--text align-end"
               height="200px"
@@ -41,8 +51,10 @@
         </v-lazy>
       </v-col>
     </v-row>
-    
   </v-container>
+  </div>
+  
+  
   </div>
 </template>
 
@@ -51,15 +63,14 @@ export default {
   props: [],
   data(){
     return{
-      myStyle:{
-            backgroundColor:"#ebebeb" 
-            }
     }
   },
   computed: {
     meetups() {
-      console.log(this.$store.getters.loadedMeetUps);
       return this.$store.getters.loadedMeetUps;
+    },
+    loading() {
+      return this.$store.getters.loading;
     },
     
   },

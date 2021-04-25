@@ -8,7 +8,7 @@
     </v-row>
     <v-divider > </v-divider>
     <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center"
-    v-for="meet in meetups" :key="meet.id">
+    >
       <v-col xs="12" md="3" align-self="center">
         <v-avatar 
         color="primary"
@@ -20,19 +20,19 @@
         ></v-img>
       </v-avatar>
       </v-col>
-      <v-col xs="12" md="2" align-self="center">
+      <v-col :bind="nameExt" xs="12" md="2" align-self="center">
         <div>Name:</div>
-        <div class="font-weight-medium">{{meet.name[0]}}</div>
+        <div class="font-weight-medium">{{nameExt.name[0]}}</div>
       </v-col>
     </v-row>
     <v-divider></v-divider>
-    <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center">
+    <v-row   justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center">
       <v-col xs="12" md="3">
         <h2>Created MeetUp</h2>
       </v-col>
     </v-row>
     
-    <v-row wrap class="mb-2" v-for="meet in meetups" :key="meet.id">
+    <v-row  class="mb-2" v-for="meet in meetups" :key="meet.id">
       <v-col md="3"></v-col>
       <v-col md="6">
         <v-lazy
@@ -84,7 +84,7 @@
         <v-list-item
           v-for="tile in tiles"
           :key="tile.title"
-          @click="sheet = false"
+          @click="sheet = !sheet"
         >
           <v-list-item-title>{{ tile.title }}</v-list-item-title>
         </v-list-item>
@@ -132,6 +132,11 @@ computed: {
       console.log("I am profile",this.$store.getters.myMeetup);
         
       return this.$store.getters.myMeetup;
+    },
+    nameExt() {
+      console.log("I am profile 2",this.$store.getters.myMeetup[0,1]);
+        
+      return this.$store.getters.myMeetup[0,1];
     },
   },
 }

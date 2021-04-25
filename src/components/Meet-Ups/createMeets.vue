@@ -131,6 +131,7 @@ export default {
 
         console.log(meetUpData)
         this.$store.dispatch('createMeetUp', meetUpData)
+        this.$router.push("/meetups")
         
       },
       onPickFile(){

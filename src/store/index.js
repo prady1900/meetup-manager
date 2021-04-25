@@ -9,28 +9,12 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    loadedMeetUps: [
-      {
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/4/47/New_york_times_square-terabass.jpg",
-        id: "afajfjadfaadfa323",
-        title: "Meetup in New York",
-        date: "2017-07-17",
-        description: "asdajksdkahsdahsdha",
-      },
-      {
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/7/7a/Paris_-_Blick_vom_gro%C3%9Fen_Triumphbogen.jpg",
-        id: "aadsfhbkhlk1241",
-        title: "Meetup in Paris",
-        date: "2017-07-19",
-        description: "sdaigsdogffgasgfukagdfgaigsd9asuda",
-      },
-    ],
+    loadedMeetUps: [],
     myMeetups:null,
     user: null,
     loading: false,
     error: null,
+    placeHolder: false,
   },
   getters: {
     myMeetup(state){
@@ -123,9 +107,11 @@ export const store = new Vuex.Store({
         const name1=[]
         const obj1 = snapshot.val()
         firebase.database().ref("/userName/"+getters.user.id).on("value", (snapshot)=>{
+          commit("setLoading", true)
           snapshot.forEach((childSnap)=>{
             name1.push(childSnap.val())
             console.log("Hello from refs",name1)
+            commit("setLoading", false)
           });
         })
         
@@ -202,6 +188,7 @@ export const store = new Vuex.Store({
         })
         .then((fileData) => {
           fileData.ref.getDownloadURL().then((url) => {
+            console.log("Hello",url)
             commit("createMeetUp", {
               ...meetUps,
               imageUrl: url,
