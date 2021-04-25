@@ -44,7 +44,7 @@ new Vue({
         this.$store.dispatch('fetchUserData')
       }
     })
-    this.$store.dispatch("loadMeetUpFromFB");  
-    this.$store.dispatch('loadMyMeetsFromFB')
+    this.$store.dispatch("loadMeetUpFromFB")  
+    this.$store.dispatch("loadMyMeetsFromFB")
   },
 }).$mount("#app");

@@ -240,8 +240,22 @@ export const store = new Vuex.Store({
       firebase.database().ref('/users/' + user.id).child('/registrations/')
         .push(payload)
         .then(data => {
+
           commit('setLoading', false)
           commit('registerUserForMeetup', {id: payload, fbKey: data.key})
+        }).then(()=>{
+          let name1 =[]
+          firebase.database().ref("/userName/"+getters.user.id).on("value", (snapshot)=>{
+            commit("setLoading", true)
+            snapshot.forEach((childSnap)=>{
+              name1.push(childSnap.val())
+              commit("setLoading", false)
+            });
+            
+            firebase.database().ref('/meetups/'+payload+"/regnames").child(getters.user.id).set(name1[0]).then(()=>{
+              console.log("User Name Registered")
+            })
+          })
         })
         .catch(error => {
           console.log(error)
@@ -260,6 +274,10 @@ export const store = new Vuex.Store({
         .then(() => {
           commit('setLoading', false)
           commit('unregisterUserFromMeetup', payload)
+        }).then(()=>{
+          firebase.database().ref('/meetups/'+payload+"/regnames").child(getters.user.id).remove().then(()=>{
+            console.log("User Name Registered")
+          })
         })
         .catch(error => {
           console.log(error)
@@ -345,6 +363,8 @@ export const store = new Vuex.Store({
             registeredMeetups.push(dataPairs[key])
             swappedPairs[dataPairs[key]] = key
           }
+          
+
           const updatedUser = {
             id: getters.user.id,
             registeredMeetups: registeredMeetups,

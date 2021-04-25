@@ -1,5 +1,5 @@
 <template>
-<div :style="myStyle">
+<div >
   <v-container>
     <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center">
       <v-col xs="12" md="3">
@@ -130,13 +130,12 @@ export default {
 computed: {
     meetups() {
       console.log("I am profile",this.$store.getters.myMeetup);
-        
       return this.$store.getters.myMeetup;
     },
     nameExt() {
-      console.log("I am profile 2",this.$store.getters.myMeetup[0,1]);
+      console.log("I am profile 2",this.$store.getters.myMeetup[0]);
         
-      return this.$store.getters.myMeetup[0,1];
+      return this.$store.getters.myMeetup[0];
     },
   },
 }
