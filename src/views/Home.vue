@@ -31,6 +31,17 @@
         </v-col>
         <v-col md="3"> </v-col>
       </v-row>
+      <v-row>
+        <v-col md="2">
+
+        </v-col>
+        <v-col md="8">
+          <h2>Create Your Own Meetup Now!</h2>
+        </v-col>
+        <v-col md="2">
+
+        </v-col>
+      </v-row>
     </v-container>
     </div>
     

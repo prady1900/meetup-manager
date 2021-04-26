@@ -1,5 +1,5 @@
 <template>
-<div >
+<div style="background: #f2f2f2">
   <v-container>
     <v-row justify-md="center" justify-sm="center" justify-xs="center" justify-lg="center">
       <v-col xs="12" md="3">
@@ -70,6 +70,7 @@
           dark
           v-bind="attrs"
           v-on="on"
+          @click="onViewAttendde(meet.id)"
         >
           Check Attendee List
         </v-btn>
@@ -82,11 +83,11 @@
         <v-list>
         
         <v-list-item
-          v-for="tile in tiles"
-          :key="tile.title"
+          v-for="tile in regUsers"
+          :key="tile"
           @click="sheet = !sheet"
         >
-          <v-list-item-title>{{ tile.title }}</v-list-item-title>
+          <v-list-item-title>{{ tile }}</v-list-item-title>
         </v-list-item>
       </v-list>
        
@@ -114,20 +115,19 @@ export default {
   data(){
     return{
       sheet: false,
-      tiles: [
-        {  title: 'Ramesh' },
-        { title: 'Shyam' },
-        { title: 'Paarth' },
-        { title: 'Ram' },
-        { title: 'Rahil' },
-      ],
+      
       myStyle:{
              
             backgroundColor:"#ebebeb" 
             }
     }
   },
-computed: {
+  methods:{
+    onViewAttendde(meetid){
+       this.$store.dispatch("getUserName",meetid)
+    },
+  },
+  computed: {
     meetups() {
       console.log("I am profile",this.$store.getters.myMeetup);
       return this.$store.getters.myMeetup;
@@ -137,6 +137,16 @@ computed: {
         
       return this.$store.getters.myMeetup[0];
     },
+    meetId(){
+      console.log(this.$store.getters.myMeetup[0].id)
+      return this.$store.getters.myMeetup[0].id;
+    },
+    regUsers(){
+      return this.$store.getters.regUserNamesGetter
+    },
+
+
+
   },
 }
 </script>

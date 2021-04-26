@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation class="mx-6" @submit.prevent='onCreateMeetup'>
+  <v-form style="background: #f2f2f2" ref="form" v-model="valid" lazy-validation class="mx-6" @submit.prevent='onCreateMeetup'>
     <v-container>
       <v-row justify-md="center">
         <v-col md="4" >

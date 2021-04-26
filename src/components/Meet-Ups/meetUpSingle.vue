@@ -1,5 +1,5 @@
 <template>
-  <div id="meetUpsPage">
+  <div id="meetUpsPage" style="background: #f2f2f2">
     <v-container>
       <v-row justify="center" align="center" v-if="loading">
         <v-col md="6" offset-md="3">
@@ -33,7 +33,7 @@
             <v-card-text class="text--primary">
               <v-row justify-md="space-between">
                 <v-col md="4"><div class="info--text">{{ meetup.date | date }} </div> </v-col>
-                <v-col md="2"><app-edit-date :meetup="meetup"></app-edit-date></v-col>
+                <v-col md="2"></v-col>  
               </v-row>
               
               <h3>Location:</h3>
@@ -57,6 +57,7 @@ export default {
   props: ["id"],
   computed: {
     meetup() {
+      console.log("Single",this.$store.getters.loadedMeetUp(this.id))
       return this.$store.getters.loadedMeetUp(this.id);
     },
     userIsAuthenticated() {

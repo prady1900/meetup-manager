@@ -15,10 +15,14 @@ export const store = new Vuex.Store({
     loading: false,
     error: null,
     placeHolder: false,
+    usernames:[]
   },
   getters: {
     myMeetup(state){
       return state.myMeetups
+    },
+    regUserNamesGetter(state){
+      return state.usernames
     },
     loadedMeetUps(state) {
       return state.loadedMeetUps.sort((meetupA, meetupB) => {
@@ -60,6 +64,9 @@ export const store = new Vuex.Store({
       registeredMeetups.splice(registeredMeetups.findIndex(meetup => meetup.id === payload), 1)
       Reflect.deleteProperty(state.user.fbKeys, payload)
     },
+    regUserNames(state,payload){
+      state.usernames = payload
+    },
     setLoadedMeetups(state, payload) {
       state.loadedMeetUps = payload;
     },
@@ -98,7 +105,15 @@ export const store = new Vuex.Store({
   },
   actions: {
     
-    
+    getUserName({commit},payload){
+      let username=[]
+      firebase.database().ref("meetups/"+payload+"/regnames").on("value",(snapshot)=>{
+        snapshot.forEach((childsnap)=>{
+          username.push(childsnap.val())
+        })
+      })
+      commit("regUserNames",username)
+    },
     loadMyMeetsFromFB({commit,getters}){
       commit("setLoading", true)
       firebase.database().ref("meetups").on("value",(snapshot)=>{
@@ -149,6 +164,7 @@ export const store = new Vuex.Store({
                 description: obj[key].description,
                 imageUrl: obj[key].imageUrl,
                 date: obj[key].date,
+                location: obj[key].location,
                 creatorId: obj[key].creatorId,
               });
             }
@@ -382,6 +398,7 @@ export const store = new Vuex.Store({
       firebase.auth().signOut();
       commit("setUser", null);
       commit("myMeetups", null);
+
 
     },
     clearError({ commit }) {
