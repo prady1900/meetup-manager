@@ -28,13 +28,13 @@ new Vue({
   render: (h) => h(App),
   created() {
       const firebaseConfig = {
-        apiKey: "AIzaSyDOsAcscnElU6RfuOFD0E0ICzLUdROf5JY",
-        authDomain: "meet-ups-e78ee.firebaseapp.com",
-        projectId: "meet-ups-e78ee",
-        storageBucket: "meet-ups-e78ee.appspot.com",
-        messagingSenderId: "916491785874",
-        appId: "1:916491785874:web:e99879baccc4028599384b",
-        measurementId: "G-690HHZ5SQF",
+        apiKey: "",
+        authDomain: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: "",
+        measurementId: "",
       };
       firebase.initializeApp(firebaseConfig);
 
